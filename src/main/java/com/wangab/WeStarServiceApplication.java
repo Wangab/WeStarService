@@ -58,7 +58,7 @@ public class WeStarServiceApplication {
 		registrationBean.setFilter(new TokenFilter());
 		registrationBean.setOrder(1);
 		List<String> urls = new ArrayList<>();
-		urls.add("/users/changepwd");
+		urls.add("/users/*");
 		registrationBean.setUrlPatterns(urls);
 		return registrationBean;
 	}

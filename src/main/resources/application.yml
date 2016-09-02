@@ -1,0 +1,26 @@
+server:
+  port: 8001
+  context-path: /wsapi01
+spring:
+  application:
+    name: WeStartServiceApi01
+  redis:
+    host: 123.57.228.78
+    port: 6379
+    password: HJ8q2PNY5x)nmLiZ5kLJs+(w9J(lh39fLZg-chm#bVRWv~@x(n*W&bHPROhvXn-
+  datasource:
+    url: jdbc:mysql://123.57.228.78:3306/westar?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false
+    username: westar
+    password: 3eWYlF1FpDBIE#LYoKQsVjg
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    zookeeper:
+      connect-string: 127.0.0.1:2181
+      discovery:
+        register: true
+logging:
+  level:
+    root: info
+application:
+  blow:
+    key: wangab@123

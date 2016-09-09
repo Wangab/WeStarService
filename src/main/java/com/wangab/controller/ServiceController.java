@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -20,8 +17,8 @@ import java.util.Map;
  * Created by wanganbang on 8/31/16.
  */
 @RestController
-@RequestMapping("/users")
-public class UserServiceController {
+@RequestMapping("/service")
+public class ServiceController {
     @Resource
     MySqlService mySqlService;
 
@@ -42,13 +39,13 @@ public class UserServiceController {
         }
     }
 
-    @RequestMapping(value = "/delact", method = RequestMethod.DELETE)
-    @ApiOperation(value = "删除活动接口", notes = "输入活动相关数据，只需要活动id即可，其他的不用输入，请求体是一个json格式", produces = "application/json")
+    @RequestMapping(value = "/{actid}/delact", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除活动接口", notes = "输入活动相关数据，只需要活动id")
     @ApiImplicitParam(name = "accessToken", value = "API访问token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<Map<String, Object>> deleteActivity(@RequestBody ActivityVO activity) {
+    public ResponseEntity<Map<String, Object>> deleteActivity(@PathVariable("actid") String actid) {
         Map<String,Object> result = new HashMap<String,Object>();
-        long actid = activity.getId();
-        boolean isOK = mySqlService.deleteActivity(actid);
+        long activityId = Long.valueOf(actid);
+        boolean isOK = mySqlService.deleteActivity(activityId);
         if (isOK) {
             result.put("retcode",1);
             result.put("retmsg", "success");
@@ -61,7 +58,7 @@ public class UserServiceController {
     }
 
     @RequestMapping(value = "/updateact", method = RequestMethod.PUT)
-    @ApiOperation(value = "删除活动接口", notes = "输入活动相关数据，活动id必须有，其他的可以选择输入最低要有一项，请求体是一个json格式", produces = "application/json")
+    @ApiOperation(value = "修改活动接口", notes = "输入活动相关数据，活动id必须有，其他的可以选择输入最低要有一项，请求体是一个json格式", produces = "application/json")
     @ApiImplicitParam(name = "accessToken", value = "API访问token", required = true, dataType = "string", paramType = "header")
     public ResponseEntity<Map<String, Object>> updateActivity(@RequestBody ActivityVO activity) {
         Map<String,Object> result = new HashMap<String,Object>();

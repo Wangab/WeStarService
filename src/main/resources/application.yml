@@ -5,11 +5,11 @@ spring:
   application:
     name: WeStartServiceApi01
   redis:
-    host: 123.57.228.78
+    host: 10.51.92.132
     port: 6379
     password: HJ8q2PNY5x)nmLiZ5kLJs+(w9J(lh39fLZg-chm#bVRWv~@x(n*W&bHPROhvXn-
   datasource:
-    url: jdbc:mysql://123.57.228.78:3306/westar?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false
+    url: jdbc:mysql://10.51.92.132:3306/westar_test?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false
     username: westar
     password: 3eWYlF1FpDBIE#LYoKQsVjg
     driver-class-name: com.mysql.jdbc.Driver

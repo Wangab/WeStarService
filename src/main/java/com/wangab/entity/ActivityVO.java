@@ -1,21 +1,26 @@
 package com.wangab.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  * Created by Administrator on 2016/9/2.
  */
-public class ActivityVO implements Serializable{
+public class ActivityVO implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    @ApiModelProperty(hidden = true)
     private long id;
+    @ApiModelProperty(hidden = true)
+    private String userid;
     private String title;
     private String contents;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private Date startTime;
+    private Date endTime;
     private Double commission;
     private int number;
     private String location;
@@ -25,7 +30,23 @@ public class ActivityVO implements Serializable{
     private String phone;
 
     @JsonCreator
-    public ActivityVO(long id, String title, String contents, Timestamp startTime, Timestamp endTime, Double commission, int number, String location, String partyLocation, String payType, String contact, String phone) {
+    public ActivityVO(@JsonProperty("actid") long id, @JsonProperty("userID") String userid, @JsonProperty("title") String title, @JsonProperty("contents") String contents,@JsonProperty("startTime") @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") @JsonProperty("endTime") Date endTime, @JsonProperty("commission") Double commission, @JsonProperty("number") int number, @JsonProperty("location") String location, @JsonProperty("partyLocation") String partyLocation, @JsonProperty("payType") String payType, @JsonProperty("contact") String contact, @JsonProperty("phone") String phone) {
+        this.id = id;
+        this.userid = userid;
+        this.title = title;
+        this.contents = contents;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.commission = commission;
+        this.number = number;
+        this.location = location;
+        this.partyLocation = partyLocation;
+        this.payType = payType;
+        this.contact = contact;
+        this.phone = phone;
+    }
+
+    public ActivityVO(long id, String title, String contents, Date startTime, Date endTime, Double commission, int number, String location, String partyLocation, String payType, String contact, String phone) {
         this.id = id;
         this.title = title;
         this.contents = contents;
@@ -64,19 +85,19 @@ public class ActivityVO implements Serializable{
         this.contents = contents;
     }
 
-    public Timestamp getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
@@ -134,6 +155,14 @@ public class ActivityVO implements Serializable{
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     @Override

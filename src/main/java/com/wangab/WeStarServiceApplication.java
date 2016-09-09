@@ -39,7 +39,7 @@ public class WeStarServiceApplication {
 				.forCodeGeneration(true)
 				.pathMapping("/")// base，最终调用接口后会和paths拼接在一起
 				.select()
-				.paths(regex("/users.*"))//过滤的接口
+				.paths(regex("/service.*"))//过滤的接口
 				.build()
 				.apiInfo(new ApiInfo(
 						"WeStar新版服务接口测试",
@@ -47,8 +47,8 @@ public class WeStarServiceApplication {
 						"1.0",
 						"NO terms of service",
 						new Contact("王安邦","", ""),
-						"westar project",
-						"https://github.com/Wangab"));
+						"westar API project",
+						"https://github.com/Wangab/WeStarService"));
 	}
 
 	@Bean
@@ -58,7 +58,7 @@ public class WeStarServiceApplication {
 		registrationBean.setFilter(new TokenFilter());
 		registrationBean.setOrder(1);
 		List<String> urls = new ArrayList<>();
-		urls.add("/users/*");
+		urls.add("/service/*");
 		registrationBean.setUrlPatterns(urls);
 		return registrationBean;
 	}

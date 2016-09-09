@@ -32,17 +32,30 @@ public class TokenFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         log.info("执行拦截 -- " + ((HttpServletRequest)servletRequest).getRequestURL());
         MyServletRequestWrapper request = new MyServletRequestWrapper((HttpServletRequest)servletRequest);
-        BufferedReader reader = request.getReader();
-        StringBuffer stringBuilder = new StringBuffer();
-        char[] chars = new char[1024];
-        while (reader.read(chars) != -1){
-            stringBuilder.append(chars);
+        String userID = "";
+        if ("DELETE".equals(request.getMethod()) || "GET".equals(request.getMethod())) {
+            String[] strs = request.getRequestURI().split("/");
+            if (strs.length >= 4){
+                userID = strs[3];
+            } else {
+                HttpServletResponse response = (HttpServletResponse)servletResponse;
+                response.sendError(HttpStatus.BAD_REQUEST.value(), "参数不足");
+                return;
+            }
+        } else {
+            BufferedReader reader = request.getReader();
+            StringBuffer stringBuilder = new StringBuffer();
+            char[] chars = new char[1024];
+            while (reader.read(chars) != -1){
+                stringBuilder.append(chars);
+            }
+            String jsonstr = stringBuilder.toString();
+            log.info("解析请求内容 -- \n" + jsonstr);
+            JSONObject jsonObject = new JSONObject(jsonstr);
+            userID = jsonObject.optString("userID");
+
         }
-        String jsonstr = stringBuilder.toString();
-        log.info("解析请求内容 -- \n" + jsonstr);
-        JSONObject jsonObject = new JSONObject(jsonstr);
-        String userID = jsonObject.optString("userID");
-//        log.info(userID);
+        //        log.info(userID);
         String accessToken = ((HttpServletRequest) servletRequest).getHeader("accessToken");
         if (StringUtils.isEmpty(accessToken)) {
             accessToken = servletRequest.getParameter("accessToken");

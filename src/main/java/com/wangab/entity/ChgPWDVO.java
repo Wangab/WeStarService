@@ -2,7 +2,6 @@ package com.wangab.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.internal.Nullable;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
@@ -12,7 +11,6 @@ import java.io.Serializable;
  */
 public class ChgPWDVO implements Serializable {
     private static final long serialVersionUID = 7847704025901187458L;
-    @Nullable
     @ApiModelProperty(hidden = true)
     private String userid;
     @ApiModelProperty(hidden = true)

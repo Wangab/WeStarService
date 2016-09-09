@@ -26,7 +26,7 @@ public class MySqlService {
     private static final String UPDATE_USER_SQL = "UPDATE t_user SET passwd = ? WHERE uid =? and passwd = ?";
     private static final String QUERY_USER_SQL = "SELECT * FROM t_user WHERE uid=?";
     private static final String UPDATE_ACTIVITY_SQL = "UPDATE t_activity SET commission = ?,contact = ?,content = ?,end_time = ?,location = ?,number_people = ?,party_localtion = ?,pay_type = ?,phone_number = ?,start_time = ?,title = ? WHERE id = ?";
-    private static final String SELECT_ACTIVITY_SQL = "SELECT commission,contact,content,end_time,location,number_people,party_localtion,pay_type,phone_number,start_time,title WHERE id = ?";
+    private static final String SELECT_ACTIVITY_SQL = "SELECT id,commission,contact,content,end_time,location,number_people,party_localtion,pay_type,phone_number,start_time,title FROM t_activity WHERE id = ?";
     private MD5Digest md5Digest = new MD5Digest();
 
     @Autowired
@@ -151,8 +151,8 @@ public class MySqlService {
                     long id = resultSet.getLong("id");
                     String title = resultSet.getString("title");
                     String contents = resultSet.getString("content");
-                    Timestamp startTime = resultSet.getTimestamp("start_time");
-                    Timestamp endTime = resultSet.getTimestamp("end_time");
+                    Date startTime = resultSet.getDate("start_time");
+                    Date endTime = resultSet.getDate("end_time");
                     Double commission = resultSet.getDouble("commission");
                     Integer number = resultSet.getInt("number_people");
                     String location = resultSet.getString("location");
@@ -172,7 +172,7 @@ public class MySqlService {
         log.info("activity contact -- " + contact);
         String contents = activity.getContents();
         log.info("activity contents -- " + contents);
-        Timestamp endTime = activity.getEndTime();
+        Date endTime = activity.getEndTime();
         log.info("activity endTime -- " + endTime);
         String location = activity.getLocation();
         log.info("activity location -- " + location);
@@ -184,7 +184,7 @@ public class MySqlService {
         log.info("activity payType -- " + payType);
         String phone = activity.getPhone();
         log.info("activity phone -- " + phone);
-        Timestamp startTime = activity.getStartTime();
+        Date startTime = activity.getStartTime();
         log.info("activity startTime -- " + startTime);
         String title = activity.getTitle();
         log.info("activity title -- " + title);
@@ -193,60 +193,61 @@ public class MySqlService {
             jdbcTemplate.update(UPDATE_ACTIVITY_SQL, new PreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement preparedStatement) throws SQLException {
+                    preparedStatement.setLong(12, id);
                     if (commission != null && commission != 0) {
                         preparedStatement.setDouble(1, commission);
                     } else {
-                        preparedStatement.setDouble(1, result.getCommission());
+                        preparedStatement.setDouble(1, result.getCommission() == null ? 0:result.getCommission());
                     }
-                    if (org.springframework.util.StringUtils.isEmpty(contact)){
+                    if (!org.springframework.util.StringUtils.isEmpty(contact)){
                         preparedStatement.setString(2, contact);
                     } else {
-                        preparedStatement.setString(2, result.getContact());
+                        preparedStatement.setString(2, result.getContact() == null ? "空":result.getContact());
                     }
-                    if (org.springframework.util.StringUtils.isEmpty(contents)){
+                    if (!org.springframework.util.StringUtils.isEmpty(contents)){
                         preparedStatement.setString(3, contents);
                     } else {
-                        preparedStatement.setString(3, result.getContents());
+                        preparedStatement.setString(3, result.getContents() == null ? "空":result.getContents());
                     }
                     if (endTime != null){
-                        preparedStatement.setTimestamp(4, endTime);
+                        preparedStatement.setDate(4, endTime);
                     } else {
-                        preparedStatement.setTimestamp(4, result.getEndTime());
+                        preparedStatement.setDate(4, result.getEndTime() == null ? new Date(System.currentTimeMillis()):result.getEndTime());
                     }
-                    if (org.springframework.util.StringUtils.isEmpty(location)){
+                    if (!org.springframework.util.StringUtils.isEmpty(location)){
                         preparedStatement.setString(5, location);
                     } else {
-                        preparedStatement.setString(5, result.getLocation());
+                        preparedStatement.setString(5, result.getLocation() == null ? "空":result.getLocation());
                     }
                     if (num != null && num != 0){
                         preparedStatement.setInt(6, num);
                     } else {
                         preparedStatement.setInt(6, result.getNumber());
                     }
-                    if (org.springframework.util.StringUtils.isEmpty(partyLocation)){
+                    if (!org.springframework.util.StringUtils.isEmpty(partyLocation)){
                         preparedStatement.setString(7, partyLocation);
                     } else {
-                        preparedStatement.setString(7, result.getPartyLocation());
+                        preparedStatement.setString(7, result.getPartyLocation() == null ? "空":result.getPartyLocation());
                     }
-                    if (org.springframework.util.StringUtils.isEmpty(payType)){
+                    if (!org.springframework.util.StringUtils.isEmpty(payType)){
                         preparedStatement.setString(8, payType);
                     } else {
-                        preparedStatement.setString(8, result.getPayType());
+                        preparedStatement.setString(8, result.getPayType() == null ? "空":result.getPayType());
                     }
-                    if (org.springframework.util.StringUtils.isEmpty(phone)){
+                    if (!org.springframework.util.StringUtils.isEmpty(phone)){
                         preparedStatement.setString(9, phone);
                     } else {
-                        preparedStatement.setString(9, result.getPhone());
+                        preparedStatement.setString(9, result.getPhone() == null ? "空":result.getPhone());
                     }
                     if (startTime != null){
-                        preparedStatement.setTimestamp(10, startTime);
+                        preparedStatement.setDate(10, startTime);
                     } else {
-                        preparedStatement.setTimestamp(10, result.getStartTime());
+                        preparedStatement.setDate(10, result.getStartTime() == null ? new Date(System.currentTimeMillis()):result.getStartTime());
                     }
-                    if (org.springframework.util.StringUtils.isEmpty(title)){
+                    if (!org.springframework.util.StringUtils.isEmpty(title)){
                         preparedStatement.setString(11, title);
                     } else {
-                        preparedStatement.setString(11, result.getTitle());
+                        preparedStatement.setString(11, result.getTitle() == null ? "空":result.getTitle());
                     }
                 }
             });

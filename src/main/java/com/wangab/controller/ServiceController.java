@@ -39,13 +39,14 @@ public class ServiceController {
         }
     }
 
-    @RequestMapping(value = "/{actid}/delact", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{uid}/{actid}/delact", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除活动接口", notes = "输入活动相关数据，只需要活动id")
     @ApiImplicitParam(name = "accessToken", value = "API访问token", required = true, dataType = "string", paramType = "header")
-    public ResponseEntity<Map<String, Object>> deleteActivity(@PathVariable("actid") String actid) {
+    public ResponseEntity<Map<String, Object>> deleteActivity(@PathVariable("actid") String actid, @PathVariable("uid") String uid) {
         Map<String,Object> result = new HashMap<String,Object>();
         long activityId = Long.valueOf(actid);
-        boolean isOK = mySqlService.deleteActivity(activityId);
+        long userid = Long.valueOf(uid);
+        boolean isOK = mySqlService.deleteActivity(activityId, userid);
         if (isOK) {
             result.put("retcode",1);
             result.put("retmsg", "success");

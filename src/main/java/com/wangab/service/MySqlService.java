@@ -22,10 +22,10 @@ import java.util.Map;
 public class MySqlService {
     private static final Logger log = LoggerFactory.getLogger(MySqlService.class);
 
-    private static final String DELETE_ACTIVITY_SQL = "DELETE FROM t_activity WHERE id = ?";
+    private static final String DELETE_ACTIVITY_SQL = "DELETE FROM t_activity WHERE id = ? AND push_uid=?";
     private static final String UPDATE_USER_SQL = "UPDATE t_user SET passwd = ? WHERE uid =? and passwd = ?";
     private static final String QUERY_USER_SQL = "SELECT * FROM t_user WHERE uid=?";
-    private static final String UPDATE_ACTIVITY_SQL = "UPDATE t_activity SET commission = ?,contact = ?,content = ?,end_time = ?,location = ?,number_people = ?,party_localtion = ?,pay_type = ?,phone_number = ?,start_time = ?,title = ? WHERE id = ?";
+    private static final String UPDATE_ACTIVITY_SQL = "UPDATE t_activity SET commission = ?,contact = ?,content = ?,end_time = ?,location = ?,number_people = ?,party_localtion = ?,pay_type = ?,phone_number = ?,start_time = ?,title = ? WHERE id = ? AND push_uid=?";
     private static final String SELECT_ACTIVITY_SQL = "SELECT id,commission,contact,content,end_time,location,number_people,party_localtion,pay_type,phone_number,start_time,title FROM t_activity WHERE id = ?";
     private MD5Digest md5Digest = new MD5Digest();
 
@@ -113,11 +113,12 @@ public class MySqlService {
      * @param actid 要删除的活动ID
      * @return
      */
-    public boolean deleteActivity(long actid) {
+    public boolean deleteActivity(long actid, long uid) {
         return jdbcTemplate.execute(DELETE_ACTIVITY_SQL, new PreparedStatementCallback<Boolean>() {
             @Override
             public Boolean doInPreparedStatement(PreparedStatement preparedStatement) throws SQLException, DataAccessException {
                 preparedStatement.setLong(1, actid);
+                preparedStatement.setLong(2, uid);
                 try {
                     preparedStatement.execute();
                     return true;
@@ -194,6 +195,7 @@ public class MySqlService {
                 @Override
                 public void setValues(PreparedStatement preparedStatement) throws SQLException {
                     preparedStatement.setLong(12, id);
+                    preparedStatement.setLong(13, Long.valueOf(activity.getUserid()));
                     if (commission != null && commission != 0) {
                         preparedStatement.setDouble(1, commission);
                     } else {

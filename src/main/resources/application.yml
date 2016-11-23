@@ -5,19 +5,26 @@ spring:
   application:
     name: WeStartServiceApi01
   redis:
-    host: 10.51.92.132
+#    host: 10.51.92.132
+    host: 123.57.228.78
     port: 6379
     password: HJ8q2PNY5x)nmLiZ5kLJs+(w9J(&bHPROhvXn-
   datasource:
-    url: jdbc:mysql://10.51.92.132:3306/westar_test?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false
+    url: jdbc:mysql://123.57.228.78:3306/westar?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false
     username: wear
     password: 3eWoKQsVjg
     driver-class-name: com.mysql.jdbc.Driver
   cloud:
     zookeeper:
-      connect-string: 127.0.0.1:2181
+      connect-string: 192.168.30.225:2181
       discovery:
         register: true
+  data:
+    mongodb:
+      uri: mongodb://192.168.30.225:27017/test
+#      username: wangab
+#      password: wab123
+
 logging:
   level:
     root: info

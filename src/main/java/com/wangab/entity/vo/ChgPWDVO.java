@@ -1,4 +1,4 @@
-package com.wangab.entity;
+package com.wangab.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

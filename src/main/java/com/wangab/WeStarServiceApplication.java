@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -16,6 +18,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableTransactionManagement
 public class WeStarServiceApplication {
 	private static final Logger log = LoggerFactory.getLogger(WeStarServiceApplication.class);
 
@@ -57,9 +61,11 @@ public class WeStarServiceApplication {
 		registrationBean.setName("accessTokenFilter");
 		registrationBean.setFilter(new TokenFilter());
 		registrationBean.setOrder(1);
-		List<String> urls = new ArrayList<>();
-		urls.add("/service/*");
-		registrationBean.setUrlPatterns(urls);
+		registrationBean.addUrlPatterns(
+				"/service/changepwd",
+				"/service/*/*/delact",
+				"/service/updateact"
+		);
 		return registrationBean;
 	}
 
@@ -78,5 +84,10 @@ public class WeStarServiceApplication {
 
 	public void setBlowKey(String blowKey) {
 		this.blowKey = blowKey;
+	}
+
+	@Bean(name = "jdbcTXManager")
+	public DataSourceTransactionManager txManager(DataSource dataSource){
+		return new DataSourceTransactionManager(dataSource);
 	}
 }

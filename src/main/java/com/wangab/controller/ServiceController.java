@@ -1,12 +1,14 @@
 package com.wangab.controller;
 
-import com.wangab.entity.ActivityVO;
-import com.wangab.entity.ChgPWDVO;
+import com.wangab.entity.vo.ActivityVO;
+import com.wangab.entity.vo.ChgPWDVO;
+import com.wangab.entity.vo.OtherRegistVO;
 import com.wangab.service.DataSourceService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -76,7 +78,31 @@ public class ServiceController {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> otherRegist() {
+    public ResponseEntity<Map<String, Object>> otherRegist(@Validated OtherRegistVO regs) {
+        Map<String,Object> result = new HashMap<String,Object>();
+        String openid = regs.getOpenid();
+        //逻辑代码
+        Map<String,Object> acountLinking = dataSourceService.getOtherAcountLinking(openid);
+        if (acountLinking != null) {
+            result.put("retcode",-45);
+            result.put("retmsg", "Account already exists");
+            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.CONFLICT);
+        }
+        //插入
+        try {
+            dataSourceService.addUser(regs);
+            result.put("retcode",1);
+            result.put("retmsg", "success");
+        } catch (Exception e){
+            result.put("retcode",-45);
+            result.put("retmsg", "inner error");
+            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Map<String, Object>> otherAuth() {
         Map<String,Object> result = new HashMap<String,Object>();
 
         //逻辑代码

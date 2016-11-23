@@ -11,6 +11,7 @@ public class WeStarServiceApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		System.out.printf(StringUtils.createId());
 	}
 
 }

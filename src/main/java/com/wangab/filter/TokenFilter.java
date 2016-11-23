@@ -1,6 +1,6 @@
 package com.wangab.filter;
 
-import com.wangab.service.MySqlService;
+import com.wangab.service.DataSourceService;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +20,12 @@ import java.io.IOException;
 public class TokenFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(TokenFilter.class);
 
-    MySqlService mySqlService;
+    DataSourceService dataSourceService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("token filter init ... ...");
-        mySqlService = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext()).getBean(MySqlService.class);
+        dataSourceService = WebApplicationContextUtils.getWebApplicationContext(filterConfig.getServletContext()).getBean(DataSourceService.class);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class TokenFilter implements Filter {
             accessToken = servletRequest.getParameter("accessToken");
         }
         if (accessToken != null) {
-            boolean isok = mySqlService.checkToken(accessToken, userID);
+            boolean isok = dataSourceService.checkToken(accessToken, userID);
             log.info("检查到accessToken -- " + accessToken + "\t result -- " + isok);
             if (!isok) {
                 HttpServletResponse response = (HttpServletResponse)servletResponse;

@@ -2,7 +2,7 @@ package com.wangab.controller;
 
 import com.wangab.entity.ActivityVO;
 import com.wangab.entity.ChgPWDVO;
-import com.wangab.service.MySqlService;
+import com.wangab.service.DataSourceService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -20,14 +20,14 @@ import java.util.Map;
 @RequestMapping("/service")
 public class ServiceController {
     @Resource
-    MySqlService mySqlService;
+    DataSourceService dataSourceService;
 
     @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
     @ApiImplicitParam(name = "accessToken", value = "API访问token", required = true, dataType = "string", paramType = "header")
     @ApiOperation(value = "更改密码接口", notes = "输入老密码、新密码，总体是一个json格式", produces = "application/json")
     public ResponseEntity<Map<String,Object>> changePWD(@RequestBody ChgPWDVO prams){
         Map<String,Object> result = new HashMap<String,Object>();
-        boolean isOK = mySqlService.updatePWD(prams.getUserid(), prams.getOldpwd(), prams.getNewpwd());
+        boolean isOK = dataSourceService.updatePWD(prams.getUserid(), prams.getOldpwd(), prams.getNewpwd());
         if (isOK) {
             result.put("retcode",1);
             result.put("retmsg", "success");
@@ -46,7 +46,7 @@ public class ServiceController {
         Map<String,Object> result = new HashMap<String,Object>();
         long activityId = Long.valueOf(actid);
         long userid = Long.valueOf(uid);
-        boolean isOK = mySqlService.deleteActivity(activityId, userid);
+        boolean isOK = dataSourceService.deleteActivity(activityId, userid);
         if (isOK) {
             result.put("retcode",1);
             result.put("retmsg", "success");
@@ -64,7 +64,7 @@ public class ServiceController {
     public ResponseEntity<Map<String, Object>> updateActivity(@RequestBody ActivityVO activity) {
         Map<String,Object> result = new HashMap<String,Object>();
         long actid = activity.getId();
-        boolean isOK = mySqlService.updateActivity(activity);
+        boolean isOK = dataSourceService.updateActivity(activity);
         if (isOK) {
             result.put("retcode",1);
             result.put("retmsg", "success");
@@ -74,5 +74,13 @@ public class ServiceController {
             result.put("retmsg", "old password is error");
             return new ResponseEntity<Map<String, Object>>(result, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public ResponseEntity<Map<String, Object>> otherRegist() {
+        Map<String,Object> result = new HashMap<String,Object>();
+
+        //逻辑代码
+
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 }

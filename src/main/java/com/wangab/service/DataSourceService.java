@@ -19,8 +19,8 @@ import java.util.Map;
  * Created by wanganbang on 8/31/16.
  */
 @Service
-public class MySqlService {
-    private static final Logger log = LoggerFactory.getLogger(MySqlService.class);
+public class DataSourceService {
+    private static final Logger log = LoggerFactory.getLogger(DataSourceService.class);
 
     private static final String DELETE_ACTIVITY_SQL = "DELETE FROM t_activity WHERE id = ? AND push_uid=?";
     private static final String UPDATE_USER_SQL = "UPDATE t_user SET passwd = ? WHERE uid =? and passwd = ?";

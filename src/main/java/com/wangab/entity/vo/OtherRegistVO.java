@@ -25,7 +25,7 @@ public class OtherRegistVO {
     private String nick;
 
     @ApiModelProperty(name = "iconUrl", value = "第三方的的头像url", dataType = "String")
-    private String iconUrl;
+    private String iconUrl = "http://123.57.249.68/M00/00/27/CjNWhFg5jhuASfAHAACQHWCt2Pw570.png";
 
     @ApiModelProperty(name = "sex", value = "第三方性别", dataType = "String", required = true)
     @NotEmpty(message = "sex is not null or empty")

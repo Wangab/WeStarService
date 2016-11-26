@@ -1,4 +1,4 @@
-package com.wangab;
+package com.wangab.utils;
 
 import org.apache.commons.lang.RandomStringUtils;
 

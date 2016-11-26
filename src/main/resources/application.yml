@@ -7,3 +7,8 @@ spring:
 application:
   blow:
     key: wangab@123
+  easemob:
+    token-url: https://a1.easemob.com/sina/showim/token
+    user-url: https://a1.easemob.com/sina/showim/users
+    client-id: YXA6mSkz0MMDEeStOe9Ev9u7dw
+    client-secret: YXA6Vux7hKGRD47NHwtn7Ve6Xzi39oc

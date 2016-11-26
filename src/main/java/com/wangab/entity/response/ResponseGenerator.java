@@ -22,4 +22,17 @@ public class ResponseGenerator {
         result.put("retmsg", "inner server error");
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    public static ResponseEntity<Map<String,Object>> userNotFoundError() {
+        Map<String,Object> result = new HashMap<String,Object>();
+        result.put("retcode", HttpStatus.NOT_FOUND.value());
+        result.put("retmsg", "User Not found");
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.NOT_FOUND);
+    }
+
+    public static ResponseEntity<Map<String,Object>> success(Map<String, Object> map) {
+        map.put("recode", 1);
+        map.put("retmsg", "登录成功");
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
 }

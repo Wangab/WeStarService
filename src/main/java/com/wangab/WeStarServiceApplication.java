@@ -1,6 +1,7 @@
 package com.wangab;
 
 import com.wangab.filter.TokenFilter;
+import com.wangab.utils.BlowfishUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -19,8 +21,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.List;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
@@ -89,5 +89,9 @@ public class WeStarServiceApplication {
 	@Bean(name = "jdbcTXManager")
 	public DataSourceTransactionManager txManager(DataSource dataSource){
 		return new DataSourceTransactionManager(dataSource);
+	}
+	@Bean
+	public RestTemplate getRestTemplate(){
+		return new RestTemplate();
 	}
 }

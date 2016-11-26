@@ -7,7 +7,7 @@ package com.wangab.entity.enums;
  * @date 2016/11/23
  */
 public enum OtherAcountType {
-    WEIXIN("weinxin", 2),QQ("qq", 3),SINAWEIBO("weibo", 4);
+    WEIXIN("WEIXIN", 2),QQ("QQ", 3),SINAWEIBO("WEIBO", 4);
 
     private String name;
     private Integer index;

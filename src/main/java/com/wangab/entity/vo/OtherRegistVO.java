@@ -1,8 +1,6 @@
 package com.wangab.entity.vo;
 
-import com.wangab.entity.enums.OtherAcountType;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
@@ -18,16 +16,15 @@ public class OtherRegistVO {
     @NotEmpty(message = "openid is not null or empty")
     private String openid;
 
-    @ApiModelProperty(name = "acountType", value = "第三方账户类型，包括weixin、qq、weibo", dataType = "OtherAcountType", required = true)
-    @NotEmpty(message = "acountType is not null or empty")
-    private OtherAcountType acountType;
+    @ApiModelProperty(name = "accountType", value = "第三方账户类型，包括weixin、qq、weibo", dataType = "String", required = true)
+    @NotEmpty(message = "accountType is not null or empty")
+    private String accountType;
 
     @ApiModelProperty(name = "nick", value = "第三方的昵称", dataType = "String", required = true)
     @NotEmpty(message = "nick is not null or empty")
     private String nick;
 
-    @ApiModelProperty(name = "iconUrl", value = "第三方的的头像url", dataType = "String", required = true)
-    @NotEmpty(message = "iconUrl is not null or empty")
+    @ApiModelProperty(name = "iconUrl", value = "第三方的的头像url", dataType = "String")
     private String iconUrl;
 
     @ApiModelProperty(name = "sex", value = "第三方性别", dataType = "String", required = true)
@@ -40,7 +37,16 @@ public class OtherRegistVO {
     private String addr;
     @ApiModelProperty(name = "birthday", value = "第三方生日", dataType = "Date")
     private Date birthday;
+    @ApiModelProperty(hidden = true)
+    private String loginName;
 
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
     public String getOpenid() {
         return openid;
@@ -50,12 +56,12 @@ public class OtherRegistVO {
         this.openid = openid;
     }
 
-    public OtherAcountType getAcountType() {
-        return acountType;
+    public String getAccountType() {
+        return accountType;
     }
 
-    public void setAcountType(OtherAcountType acountType) {
-        this.acountType = acountType;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 
     public String getNick() {

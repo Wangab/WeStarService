@@ -17,23 +17,30 @@ public class OtherRegistVO {
     @ApiModelProperty(name = "openid", value = "第三方的openid", dataType = "String", required = true)
     @NotEmpty(message = "openid is not null or empty")
     private String openid;
+
     @ApiModelProperty(name = "acountType", value = "第三方账户类型，包括weixin、qq、weibo", dataType = "OtherAcountType", required = true)
     @NotEmpty(message = "acountType is not null or empty")
     private OtherAcountType acountType;
+
     @ApiModelProperty(name = "nick", value = "第三方的昵称", dataType = "String", required = true)
     @NotEmpty(message = "nick is not null or empty")
     private String nick;
+
     @ApiModelProperty(name = "iconUrl", value = "第三方的的头像url", dataType = "String", required = true)
     @NotEmpty(message = "iconUrl is not null or empty")
     private String iconUrl;
-    @ApiModelProperty(name = "signature", value = "第三方的个性签名", dataType = "String", required = true)
+
+    @ApiModelProperty(name = "sex", value = "第三方性别", dataType = "String", required = true)
+    @NotEmpty(message = "sex is not null or empty")
+    private String sex;
+
+    @ApiModelProperty(name = "signature", value = "第三方的个性签名", dataType = "String")
     private String signature;
     @ApiModelProperty(name = "addr", value = "第三方的个性地址", dataType = "String")
     private String addr;
     @ApiModelProperty(name = "birthday", value = "第三方生日", dataType = "Date")
     private Date birthday;
-    @ApiModelProperty(name = "sex", value = "第三方性别", dataType = "String", required = true)
-    private String sex;
+
 
     public String getOpenid() {
         return openid;

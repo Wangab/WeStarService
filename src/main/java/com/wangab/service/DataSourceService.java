@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.*;
 import java.util.Map;
 
+import static com.wangab.entity.enums.OtherAcountType.WEIXIN;
+
 /**
  * Created by wanganbang on 8/31/16.
  */
@@ -137,13 +139,13 @@ public class DataSourceService {
     }
 
     public Map<String,Object> getOtherAcountLinking(String openid) {
-
-        return null;
+        Map<String,Object> result = userDAO.getAcountLinking(openid);
+        return result;
     }
 
     @Transactional(value = "jdbcTXManager")
     public Boolean addUser(OtherRegistVO regs) {
-        Boolean isExist = userDAO.checkOpenid(regs.getOpenid());
+        Boolean isExist = userDAO.checkOpenidExisting(regs.getOpenid());
         if (isExist) {
             return false;
         }
@@ -165,7 +167,7 @@ public class DataSourceService {
         regs.setSex(sex);
         Long uid = userDAO.insertOtherUser(regs);
         int usnum = userDAO.insertOtherUserStatus(uid, 0, 0);
-        int uanum = userDAO.insertOtherUserAuth(uid,0,regs.getOpenid());
+        int uanum = userDAO.insertOtherUserAuth(uid,WEIXIN.getIndex().toString(),regs.getOpenid());
         log.debug("userDAO.insertOtherUser resultuid:{} userDAO.insertOtherUserStatus resultcount:{} userDAO.insertOtherUserAuth resultcount:{}",uid,usnum,uanum);
         return true;
     }

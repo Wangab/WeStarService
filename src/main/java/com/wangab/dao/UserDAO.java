@@ -213,6 +213,7 @@ public class UserDAO {
         result.put("source", url);
         result.put("small", url);
         result.put("large", url);
+        list.add(result);
         return list;
     }
 }

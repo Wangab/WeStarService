@@ -27,7 +27,8 @@ public class ResponseGenerator {
         Map<String,Object> result = new HashMap<String,Object>();
         result.put("retcode", HttpStatus.NOT_FOUND.value());
         result.put("retmsg", "User Not found");
-        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+//        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.NOT_FOUND);
     }
 
     public static ResponseEntity<Map<String,Object>> success(Map<String, Object> map) {

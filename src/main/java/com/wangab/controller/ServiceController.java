@@ -93,9 +93,10 @@ public class ServiceController {
         //逻辑代码
         Map<String,Object> acountLinking = dataSourceService.getOtherAcountLinking(openid);
         if (acountLinking != null) {
-            result.put("retcode",-45);
+            result.put("retcode",-47);
             result.put("retmsg", "Account already exists");
-            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.CONFLICT);
+            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+//            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.CONFLICT);
         }
         //插入
         try {
@@ -104,9 +105,10 @@ public class ServiceController {
             result.put("retmsg", "success");
         } catch (Exception e){
             e.printStackTrace();
-            result.put("retcode",-45);
-            result.put("retmsg", "inner error");
-            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            result.put("retcode",-48);
+            result.put("retmsg", e.getMessage());
+//            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
         }
 
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);

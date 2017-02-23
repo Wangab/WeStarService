@@ -1,21 +1,21 @@
 spring:
   redis:
-    host: 10.51.92.132
-    port: 6379
-    password: HJ8q2PNY5x)nmLiZ5kLJs+(w9J(lh39fLZg-chm#bVRWv~@x(n*W&bHPROhvXn-
+    host: 10.***.132
+    port: ***
+    password: *******
   datasource:
-    url: jdbc:mysql://10.51.92.132:3306/westar_test?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false
-    username: westar
-    password: 3eWYlF1FpDBIE#LYoKQsVjg
+    url: jdbc:mysql://*******:3306/****?characterEncoding=UTF-8&amp;amp;autoReconnect=true&amp;amp;failOverReadOnly=false
+    username: w****
+    password: 3e8*****
     driver-class-name: com.mysql.jdbc.Driver
   cloud:
     zookeeper:
-      connect-string: 10.51.92.132:2181
+      connect-string: *******:2181
       discovery:
         register: true
   data:
     mongodb:
-      uri: mongodb://10.51.92.132:27017/test
+      uri: mongodb://1*****:27017/test
 #      username: wangab
 #      password: wab123
 
